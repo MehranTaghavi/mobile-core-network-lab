@@ -14,7 +14,7 @@
 
 1. **راه‌اندازی شبکه 4G (RAN تا Core):** پیاده‌سازی EPC و eNB با استفاده از srsRAN و open5GS، و اتصال یک UE واقعی از طریق SDR.
 2. **افزودن VoLTE با IMS:** اتصال یک لایه IMS مبتنی بر Kamailio به هسته شبکه برای برقراری تماس صوتی بین دو کاربر روی شبکه داده.
-3. **گسترش به 5G:** (فاز بعدی / در حال برنامه‌ریزی)
+3. **گسترش به 5G:** تحلیل کامل فرآیندهای Registration و 5G-AKA Authentication، و برقراری PDU Session، بر اساس Capture واقعی ترافیک شبکه.
 
 ## معماری
 
@@ -82,9 +82,9 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 
 ## نتایج و یافته‌ها
 
-- شبکه 4G به‌طور کامل و end-to-end از UE تا اینترنت راه‌اندازی و تست شد.
-- فرآیندهای Authentication، Session Establishment و PDN Connectivity از طریق تحلیل سیگنالینگ به‌صورت عملی بررسی و مستند شدند.
-- زیرساخت IMS برای VoLTE روی هسته 4G موجود پیاده‌سازی شد.
+- شبکه 4G به‌طور کامل و end-to-end از UE تا اینترنت راه‌اندازی و تست شد؛ فرآیندهای Authentication، Session Establishment و PDN Connectivity از طریق تحلیل سیگنالینگ به‌صورت عملی بررسی و مستند شدند.
+- زیرساخت IMS برای VoLTE روی هسته 4G موجود پیاده‌سازی و جریان سیگنالینگ ثبت‌نام و برقراری تماس (SIP/IMS) مستند شد.
+- فرآیند کامل Registration و 5G-AKA Authentication در شبکه 5G، بر اساس Capture واقعی، تحلیل و مستند شد؛ از کشف سرویس‌ها (NRF/SCP) و احراز هویت تا برقراری PDU Session و اعتبارسنجی اتصال اینترنت.
 
 ## دانش و مهارت‌های به‌کاررفته
 
@@ -102,8 +102,10 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 .
 ├── README.md
 ├── docs/
-│   └── project-statement.md      # شرح فنی کامل پروژه
+│   ├── project-statement.md               # صورت‌مسئله کامل پروژه
+│   ├── 4g-network-signaling.md            # فاز ۱: تحلیل سیگنالینگ 4G
+│   ├── volte-ims-call-setup.md            # فاز ۲: تحلیل VoLTE/IMS
+│   └── 5g-registration-authentication.md  # فاز ۳: تحلیل Registration/Authentication در 5G
 ├── configs/                      # فایل‌های پیکربندی eNB / EPC / IMS
-├── captures/                     # نمونه pcap های تحلیل‌شده
-└── ...
+└── captures/                     # فایل‌های pcap تحلیل‌شده
 ```
