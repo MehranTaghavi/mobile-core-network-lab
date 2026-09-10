@@ -27,25 +27,27 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 
 ### اجزای اصلی
 
-| جزء | نقش | ابزار |
-|---|---|---|
-| eNB | ایستگاه پایه، لایه دسترسی رادیویی | [srsRAN](https://docs.srsran.com/projects/4g/en/latest/index.html) |
-| EPC | هسته شبکه 4G (MME, HSS, SGW, PGW) | [open5GS](https://open5gs.org/open5gs/docs/) |
-| SDR | ارتباط رادیویی بین UE و eNB | USRP B210 |
-| IMS | زیرساخت VoLTE | Kamailio |
-| Deployment | Build و پیکربندی خودکار سرویس‌ها | [docker_open5gs](https://github.com/herlesupreeth/docker_open5gs) |
+| جزء     | نقش                                                         | ابزار                                                        |
+| ---------- | -------------------------------------------------------------- | ----------------------------------------------------------------- |
+| eNB        | ایستگاه پایه، لایه دسترسی رادیویی | [srsRAN](https://docs.srsran.com/projects/4g/en/latest/index.html) |
+| EPC        | هسته شبکه 4G (MME, HSS, SGW, PGW)                      | [open5GS](https://open5gs.org/open5gs/docs/)                       |
+| SDR        | ارتباط رادیویی بین UE و eNB                   | USRP B210                                                         |
+| IMS        | زیرساخت VoLTE                                           | Kamailio                                                          |
+| Deployment | Build و پیکربندی خودکار سرویس‌ها        | [docker_open5gs](https://github.com/herlesupreeth/docker_open5gs)  |
 
 ---
 
 ## فاز ۱: راه‌اندازی شبکه 4G
 
 ### پیاده‌سازی
+
 - EPC با استفاده از open5GS و eNB با استفاده از srsRAN راه‌اندازی شد.
 - به‌جای Build دستی از Source، از اسکریپت‌های خودکار پروژه docker_open5gs برای Build و Deploy استفاده شد.
 - در پیکربندی eNB، مدل SDR (USRP B210) تنظیم شد تا ارتباط رادیویی با UE برقرار شود.
 - اطلاعات هویتی UE (IMSI، Key، OPC) در HSS ثبت شد.
 
 ### اعتبارسنجی
+
 - اتصال UE به eNB و EPC برقرار و عملکرد اتصال به اینترنت روی UE بررسی شد.
 - سیگنالینگ بین اجزای شبکه Capture شد تا فرآیندهای زیر تحلیل شوند:
   - Authentication (احراز هویت UE)
@@ -61,6 +63,7 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 ## فاز ۲: VoLTE با IMS (Kamailio)
 
 ### پیاده‌سازی
+
 - یک لایه IMS مبتنی بر **Kamailio** به هسته شبکه 4G فاز ۱ متصل شد.
 - Deployment از طریق همان پروژه docker_open5gs انجام شد (که پشتیبانی از IMS را نیز فراهم می‌کند).
 - هدف: برقراری یک تماس صوتی (VoLTE) کامل میان دو کاربر روی زیرساخت داده‌ای که در فاز ۱ ساخته شد.
@@ -72,6 +75,7 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 ## فاز ۳: تحلیل Registration و Authentication در شبکه 5G
 
 ### پیاده‌سازی و تحلیل
+
 - شبکه هسته 5G راه‌اندازی و آنتن (gNB) به آن متصل شد؛ فایل pcap واقعی ترافیک شبکه در حین اتصال UE استخراج و در Wireshark تحلیل شد.
 - فرآیند کامل **Registration**، **5G-AKA Authentication**، دریافت سیاست‌ها و داده‌های اشتراک از UDM/UDR/PCF، و **PDU Session Establishment** (شامل تعامل SMF، UPF و BSF) به‌صورت پیام‌به‌پیام مستند و تشریح شد.
 - به‌عنوان تایید نهایی عملکرد شبکه، ترافیک داده واقعی کاربر (Resolve یک دامنه عمومی) capture و بررسی شد.
@@ -93,6 +97,13 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 ## پیش‌نیازها و اجرا
 
 *(این بخش را با دستورالعمل نصب و اجرای واقعی پروژه تکمیل کنید — مثلاً نحوه Clone کردن docker_open5gs، تنظیم فایل‌های کانفیگ، و اتصال SDR.)*
+
+---
+
+## نویسنده
+
+**مهران تقوی افخم**
+دانشجوی کارشناسی ارشد مهندسی کامپیوتر (معماری کامپیوتر)، دانشگاه صنعتی شریف
 
 ---
 
