@@ -1,12 +1,12 @@
 # راه‌اندازی شبکه موبایل از صفر: از 4G RAN/Core تا VoLTE و 5G
 
-پیاده‌سازی عملی یک شبکه موبایل کامل با استفاده از ابزارهای متن‌باز — از راه‌اندازی لایه دسترسی و هسته شبکه 4G، تا افزودن قابلیت تماس صوتی VoLTE از طریق IMS، و در نهایت گسترش به 5G.
+پیاده‌سازی عملی یک شبکه موبایل کامل با استفاده از ابزارهای متن‌باز — از راه‌اندازی لایه دسترسی و هسته شبکه تا VoLTE و تحلیل 5G.
 
 ---
 
 ## مسئله
 
-راه‌اندازی یک شبکه موبایل واقعی معمولاً پشت درهای بسته اپراتورها و با تجهیزات اختصاصی و گران‌قیمت انجام می‌شود، و همین موضوع درک عملی از معماری و پروتکل‌های این شبکه‌ها را برای بیشتر مهندسان دشوار می‌کند. هدف این پروژه، ساختن یک شبکه موبایل کامل و کارکردی با استفاده از پروژه‌های متن‌باز و سخت‌افزار SDR است — به‌گونه‌ای که تمام لایه‌ها، از رادیو تا Core Network، قابل مشاهده، پیکربندی و اشکال‌زدایی باشند.
+راه‌اندازی یک شبکه موبایل واقعی معمولاً پشت درهای بسته اپراتورها و با تجهیزات اختصاصی و گران‌قیمت انجام می‌شود؛ در نتیجه، دسترسی عملی برای یادگیری عمیق معماری شبکه‌های سلولار محدود است.
 
 ## راه‌حل
 
@@ -56,7 +56,7 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 
 📄 مستند کامل: [`docs/4g-network-signaling.md`](docs/4g-network-signaling.md)
 
-> برای تحلیل عمیق‌تر پروتکل‌ها پیش از دسترسی به سخت‌افزار واقعی، از pcapهای عمومی موجود (مانند [نمونه open5GS](https://open5gs.org/open5gs/assets/pcapng/srsenb.pcapng)) نیز استفاده شد.
+> برای تحلیل عمیق‌تر پروتکل‌ها پیش از دسترسی به سخت‌افزار واقعی، از pcapهای عمومی موجود (مانند [نمونه open5GS](https://open5gs.org/open5gs/docs/tutorial/01-your-first-lte/)) نیز استفاده شده است.
 
 ---
 
@@ -77,7 +77,7 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 ### پیاده‌سازی و تحلیل
 
 - شبکه هسته 5G راه‌اندازی و آنتن (gNB) به آن متصل شد؛ فایل pcap واقعی ترافیک شبکه در حین اتصال UE استخراج و در Wireshark تحلیل شد.
-- فرآیند کامل **Registration**، **5G-AKA Authentication**، دریافت سیاست‌ها و داده‌های اشتراک از UDM/UDR/PCF، و **PDU Session Establishment** (شامل تعامل SMF، UPF و BSF) به‌صورت پیام‌به‌پیام مستند و تشریح شد.
+- فرآیند کامل **Registration**، **5G-AKA Authentication**، دریافت سیاست‌ها و داده‌های اشتراک از UDM/UDR/PCF، و **PDU Session Establishment** (شامل تخصیص IP و ایجاد GTP-U Tunnel) مرحله‌به‌مرحله بررسی شد.
 - به‌عنوان تایید نهایی عملکرد شبکه، ترافیک داده واقعی کاربر (Resolve یک دامنه عمومی) capture و بررسی شد.
 
 📄 مستند کامل: [`docs/5g-registration-authentication.md`](docs/5g-registration-authentication.md)
@@ -86,17 +86,84 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 
 ## نتایج و یافته‌ها
 
-- شبکه 4G به‌طور کامل و end-to-end از UE تا اینترنت راه‌اندازی و تست شد؛ فرآیندهای Authentication، Session Establishment و PDN Connectivity از طریق تحلیل سیگنالینگ به‌صورت عملی بررسی و مستند شدند.
+- شبکه 4G به‌طور کامل و end-to-end از UE تا اینترنت راه‌اندازی و تست شد؛ فرآیندهای Authentication، Session Establishment و PDN Connectivity در Traceهای واقعی تایید شدند.
 - زیرساخت IMS برای VoLTE روی هسته 4G موجود پیاده‌سازی و جریان سیگنالینگ ثبت‌نام و برقراری تماس (SIP/IMS) مستند شد.
-- فرآیند کامل Registration و 5G-AKA Authentication در شبکه 5G، بر اساس Capture واقعی، تحلیل و مستند شد؛ از کشف سرویس‌ها (NRF/SCP) و احراز هویت تا برقراری PDU Session و اعتبارسنجی اتصال اینترنت.
+- فرآیند کامل Registration و 5G-AKA Authentication در شبکه 5G، بر اساس Capture واقعی، تحلیل و مستند شد؛ از کشف سرویس‌ها (NRF/SCP) و احراز هویت تا ایجاد Session داده.
 
 ## دانش و مهارت‌های به‌کاررفته
 
-شبکه‌های موبایل (4G/LTE, EPC, IMS)، SDR و ارتباطات رادیویی، تحلیل سیگنالینگ و پروتکل‌های شبکه، Docker و ابزارهای Deployment خودکار، اشکال‌زدایی سیستم‌های توزیع‌شده Real-time.
+شبکه‌های موبایل (4G/LTE, EPC, IMS)، SDR و ارتباطات رادیویی، تحلیل سیگنالینگ و پروتکل‌های شبکه، Docker و ابزارهای Deployment، تحلیل ترافیک با Wireshark.
 
 ## پیش‌نیازها و اجرا
 
-*(این بخش را با دستورالعمل نصب و اجرای واقعی پروژه تکمیل کنید — مثلاً نحوه Clone کردن docker_open5gs، تنظیم فایل‌های کانفیگ، و اتصال SDR.)*
+### پیش‌نیازها
+
+- Docker و Docker Compose
+- درایورهای UHD برای USRP B210
+- Wireshark
+
+### مراحل راه‌اندازی
+
+1. کلون‌کردن پروژه `docker_open5gs`:
+
+```bash
+git clone https://github.com/herlesupreeth/docker_open5gs.git
+cd docker_open5gs
+```
+
+2. کلون‌کردن این ریپازیتوری و ورود به آن:
+
+```bash
+git clone https://github.com/MehranTaghavi/mobile-core-network-lab.git
+cd mobile-core-network-lab
+```
+
+3. اعمال کانفیگ‌های موجود در پوشه `configs/` روی محیط `docker_open5gs` (مسیر مقصد را متناسب با ساختار همان پروژه تنظیم کنید):
+
+```bash
+# از مسیر mobile-core-network-lab
+cp -r configs/* ../docker_open5gs/
+```
+
+> در صورت نیاز، پارامترهای مربوط به `PLMN`، `TAC`، `APN`، `IMSI/Key/OPC` و IPها را با سناریوی خود هماهنگ کنید.
+
+### شناسایی سخت‌افزار
+
+برای تست شناسایی SDR (USRP B210):
+
+```bash
+uhd_find_devices
+```
+
+اگر دستگاه درست شناسایی شده باشد، اطلاعات B210 در خروجی نمایش داده می‌شود.
+
+### اجرا و تست
+
+1. اجرای سرویس‌های Open5GS/srsRAN:
+
+```bash
+cd ../docker_open5gs
+docker compose up -d
+```
+
+2. بررسی وضعیت کانتینرها:
+
+```bash
+docker compose ps
+```
+
+3. اجرای Kamailio برای VoLTE (در صورت اجرا روی میزبان):
+
+```bash
+kamailio -f /etc/kamailio/kamailio.cfg -DD -E
+```
+
+اگر Kamailio به‌صورت کانتینری تعریف شده باشد، آن را از طریق سرویس مربوطه در `docker-compose` بالا بیاورید.
+
+4. تحلیل ترافیک با Wireshark:
+
+- اینترفیس‌های مرتبط با RAN/Core را Capture کنید.
+- برای عیب‌یابی، پیام‌های `SIP`، `GTP`، `Diameter` و `NAS` را بررسی کنید.
 
 ---
 
