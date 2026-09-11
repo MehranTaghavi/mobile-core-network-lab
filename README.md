@@ -94,8 +94,9 @@ UE  ──(radio / USRP B210)──►  eNB (srsRAN)  ──►  EPC (open5GS)  
 
 شبکه‌های موبایل (4G/LTE, EPC, IMS)، SDR و ارتباطات رادیویی، تحلیل سیگنالینگ و پروتکل‌های شبکه، Docker و ابزارهای Deployment، تحلیل ترافیک با Wireshark.
 
-## پیش‌نیازها و اجرا
+## 🛠️ پیش‌نیازها و اجرا
 
+<<<<<<< HEAD
 ### پیش‌نیازها
 
 - Docker و Docker Compose
@@ -164,6 +165,36 @@ kamailio -f /etc/kamailio/kamailio.cfg -DD -E
 
 - اینترفیس‌های مرتبط با RAN/Core را Capture کنید.
 - برای عیب‌یابی، پیام‌های `SIP`، `GTP`، `Diameter` و `NAS` را بررسی کنید.
+=======
+این پروژه روی سیستم‌عامل Ubuntu Linux پیاده‌سازی و تست شده است.
+
+### پیش‌نیازهای نرم‌افزاری و سخت‌افزاری
+
+- Ubuntu Linux با دسترسی Root
+- `Docker` و `Docker Compose`
+- درایورهای USRP (پکیج `uhd-host` / `uhd-utils`) برای ارتباط با SDR
+- یک دستگاه SDR مدل **USRP B210** به‌همراه آنتن مناسب
+- یک سیم‌کارت قابل‌برنامه‌ریزی (Programmable/Test SIM) با مقادیر IMSI، Key و OPC مطابق آنچه در HSS ثبت می‌شود
+- یک گوشی موبایل واقعی به‌عنوان UE (برای تست اتصال داده و تماس VoLTE)
+
+### راه‌اندازی هسته شبکه (open5GS و IMS)
+
+برای استقرار سریع تمام توابع شبکه (MME, HSS, SGW, PGW و Kamailio) از کانتینرهای Docker پروژه [docker_open5gs](https://github.com/herlesupreeth/docker_open5gs) استفاده شد:
+
+```bash
+# کلون کردن مخزن
+git clone https://github.com/herlesupreeth/docker_open5gs.git
+cd docker_open5gs
+
+# بیلد ایمیج‌ها (ممکن است زمان‌بر باشد)
+docker-compose build
+
+# اجرای هسته شبکه در پس‌زمینه
+docker-compose up -d
+```
+
+> اتصال نهایی و تست عملی (ثبت‌نام UE، اتصال داده، و برقراری تماس VoLTE با استفاده از یک گوشی واقعی) به‌صورت عملی روی سخت‌افزار انجام شد؛ مستندسازی گام‌به‌گام این بخش (برخلاف تحلیل سیگنالینگ در `docs/`) ثبت نشده و این راهنما صرفاً چارچوب کلی راه‌اندازی محیط را پوشش می‌دهد.
+>>>>>>> 8a70557 (docs: add prerequisites and execution section)
 
 ---
 
